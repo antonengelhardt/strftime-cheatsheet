@@ -1,3 +1,3 @@
-# Date Format Symbols
+# strftime Cheatsheet
 
 Lookup time formatting symbols

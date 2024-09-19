@@ -1,20 +1,19 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
-  "name": "date-format-symbols",
-  "title": "Date Format Symbols",
-  "description": "Lookup time formatting symbols",
+  "name": "strftime-cheatsheet",
+  "title": "strftime cheatsheet",
+  "description": "Search strftime codes, meanings and examples",
   "icon": "extension-icon.png",
   "author": "antonengelhardt",
-  "owner": "savestrike",
   "categories": [
     "Developer Tools"
   ],
   "license": "MIT",
   "commands": [
     {
-      "name": "date-format-symbols",
-      "title": "Date Format Symbols",
-      "description": "",
+      "name": "search-format-codes",
+      "title": "Search Format Codes",
+      "description": "Search strftime codes, meanings and examples",
       "mode": "view"
     }
   ],
