@@ -4,6 +4,7 @@ type Code = {
   directive: string;
   description: string;
   example: string;
+  note?: string;
 };
 
 const strftimeCodes: { [key: string]: Code[] } = {
@@ -22,15 +23,15 @@ const strftimeCodes: { [key: string]: Code[] } = {
     { directive: "%a", description: "Abbreviated weekday name", example: "Sun, Mon, ..." },
     { directive: "%A", description: "Full weekday name", example: "Sunday, Monday, ..." },
     { directive: "%w", description: "Weekday as a decimal number (0-6, Sunday=0)", example: "0, 1, ..., 6" },
-    { directive: "%u", description: "ISO 8601 weekday as number (1-7, Monday=1)", example: "1, 2, ..., 7" },
+    { directive: "%u", description: "ISO 8601 weekday as number (1-7, Monday=1)", example: "1, 2, ..., 7", note: "Not supported on Windows" },
     { directive: "%d", description: "Day of the month, zero-padded (01-31)", example: "01, 02, ..., 31" },
-    { directive: "%e", description: "Day of the month, space-padded ( 1-31)", example: " 1,  2, ..., 31" },
+    { directive: "%e", description: "Day of the month, space-padded ( 1-31)", example: " 1,  2, ..., 31", note: "Not supported on Windows" },
     { directive: "%j", description: "Day of the year (001-366)", example: "001, 002, ..., 366" },
   ],
   Week: [
     { directive: "%U", description: "Week number, Sunday-based (00-53)", example: "00, 01, ..., 53" },
     { directive: "%W", description: "Week number, Monday-based (00-53)", example: "00, 01, ..., 53" },
-    { directive: "%V", description: "ISO 8601 week number (01-53)", example: "01, 02, ..., 53" },
+    { directive: "%V", description: "ISO 8601 week number (01-53)", example: "01, 02, ..., 53", note: "Not supported on Windows" },
   ],
   Month: [
     { directive: "%b", description: "Abbreviated month name", example: "Jan, Feb, ..." },
@@ -42,8 +43,8 @@ const strftimeCodes: { [key: string]: Code[] } = {
     { directive: "%C", description: "Century (year/100 as a number, 00-99)", example: "19, 20, 21" },
     { directive: "%y", description: "Year, last two digits (00-99)", example: "00, 01, ..., 99" },
     { directive: "%Y", description: "Year", example: "1970, 1988, 2001, 2013" },
-    { directive: "%g", description: "ISO 8601 week-based year, last 2 digits (00-99)", example: "00, 01, ..., 99" },
-    { directive: "%G", description: "ISO 8601 week-based year", example: "1970, 1988, 2001, 2013" },
+    { directive: "%g", description: "ISO 8601 week-based year, last 2 digits (00-99)", example: "00, 01, ..., 99", note: "Not supported on Windows" },
+    { directive: "%G", description: "ISO 8601 week-based year", example: "1970, 1988, 2001, 2013", note: "Not supported on Windows" },
   ],
   Timezone: [
     { directive: "%z", description: "UTC offset", example: "+0000, -0400, +0530" },
@@ -75,7 +76,11 @@ export default function Command() {
               key={directive.directive}
               title={directive.directive}
               subtitle={directive.description}
-              accessories={[{ text: directive.example }]}
+              accessories={
+                directive.note
+                  ? [{ text: directive.example }, { text: `⚠️ ${directive.note}`, tooltip: directive.note }]
+                  : [{ text: directive.example }]
+              }
               keywords={[directive.description, directive.example]}
               icon={{
                 source: Icon.Clock,
